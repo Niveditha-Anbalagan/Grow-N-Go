@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { ShoppingCart, Menu, Search, Package } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -18,10 +19,10 @@ const Navbar = () => {
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-6">
-          <a href="#" className="text-foreground hover:text-growgreen-600 font-medium">Home</a>
-          <a href="#shop" className="text-foreground hover:text-growgreen-600 font-medium">Shop</a>
-          <a href="#about" className="text-foreground hover:text-growgreen-600 font-medium">About</a>
-          <a href="#how-it-works" className="text-foreground hover:text-growgreen-600 font-medium">How it Works</a>
+          <Link to="/" className="text-foreground hover:text-growgreen-600 font-medium">Home</Link>
+          <Link to="/#shop" className="text-foreground hover:text-growgreen-600 font-medium">Shop</Link>
+          <Link to="/#about" className="text-foreground hover:text-growgreen-600 font-medium">About</Link>
+          <Link to="/#how-it-works" className="text-foreground hover:text-growgreen-600 font-medium">How it Works</Link>
         </div>
 
         <div className="hidden md:flex items-center space-x-4">
@@ -32,7 +33,9 @@ const Navbar = () => {
             <ShoppingCart className="h-5 w-5" />
             <span className="absolute -top-1 -right-1 bg-growgreen-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
           </Button>
-          <Button className="bg-growgreen-600 hover:bg-growgreen-700 text-white">Sign In</Button>
+          <Link to="/login">
+            <Button className="bg-growgreen-600 hover:bg-growgreen-700 text-white">Sign In</Button>
+          </Link>
         </div>
 
         {/* Mobile hamburger button */}
@@ -47,10 +50,10 @@ const Navbar = () => {
       {isMenuOpen && (
         <div className="md:hidden bg-white shadow-md pt-2 pb-4 absolute w-full z-40">
           <div className="container-custom flex flex-col space-y-3">
-            <a href="#" className="text-foreground hover:text-growgreen-600 font-medium py-2">Home</a>
-            <a href="#shop" className="text-foreground hover:text-growgreen-600 font-medium py-2">Shop</a>
-            <a href="#about" className="text-foreground hover:text-growgreen-600 font-medium py-2">About</a>
-            <a href="#how-it-works" className="text-foreground hover:text-growgreen-600 font-medium py-2">How it Works</a>
+            <Link to="/" className="text-foreground hover:text-growgreen-600 font-medium py-2">Home</Link>
+            <Link to="/#shop" className="text-foreground hover:text-growgreen-600 font-medium py-2">Shop</Link>
+            <Link to="/#about" className="text-foreground hover:text-growgreen-600 font-medium py-2">About</Link>
+            <Link to="/#how-it-works" className="text-foreground hover:text-growgreen-600 font-medium py-2">How it Works</Link>
             <div className="flex items-center space-x-3 pt-2">
               <Button variant="outline" size="icon">
                 <Search className="h-5 w-5" />
@@ -59,7 +62,9 @@ const Navbar = () => {
                 <ShoppingCart className="h-5 w-5" />
                 <span className="absolute -top-1 -right-1 bg-growgreen-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
               </Button>
-              <Button className="bg-growgreen-600 hover:bg-growgreen-700 text-white">Sign In</Button>
+              <Link to="/login">
+                <Button className="bg-growgreen-600 hover:bg-growgreen-700 text-white">Sign In</Button>
+              </Link>
             </div>
           </div>
         </div>
