@@ -7,17 +7,17 @@ const HowItWorks = () => {
     {
       icon: <ShoppingCart className="w-12 h-12 text-growgreen-600" />,
       title: "Browse & Choose",
-      description: "Select from our range of fresh, seasonal produce and farm-made goods."
+      description: "Select from our range of fresh, seasonal Tamil Nadu produce and farm-made goods."
     },
     {
       icon: <Package className="w-12 h-12 text-growgreen-600" />,
       title: "Farmers Harvest",
-      description: "Local farmers harvest your order fresh, ensuring quality and freshness."
+      description: "Local Tamil Nadu farmers harvest your order fresh, ensuring quality and freshness."
     },
     {
       icon: <Truck className="w-12 h-12 text-growgreen-600" />,
-      title: "Fresh Delivery",
-      description: "Receive your order delivered right to your doorstep, farm fresh!"
+      title: "Same-Day Delivery",
+      description: "Receive your order delivered right to your Chennai doorstep, farm fresh!"
     }
   ];
 
@@ -26,9 +26,9 @@ const HowItWorks = () => {
       <div className="container-custom">
         <div className="text-center mb-12">
           <h2 className="subheadline">How It Works</h2>
-          <h3 className="text-2xl md:text-3xl font-bold mb-6 font-poppins">From Farm To Doorstep</h3>
+          <h3 className="text-2xl md:text-3xl font-bold mb-6 font-poppins">From Tamil Nadu Farms To Chennai Doorsteps</h3>
           <p className="max-w-2xl mx-auto text-lg text-gray-600">
-            Our simple process ensures you get the freshest products possible from our network of local farms.
+            Our simple process ensures you get the freshest products possible from our network of local Tamil Nadu farms.
           </p>
         </div>
         

@@ -13,58 +13,58 @@ interface ProductType {
 const products: ProductType[] = [
   {
     id: 1,
-    name: "Organic Strawberries",
-    price: 4.99,
-    image: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9",
+    name: "Organic Bananas",
+    price: 65,
+    image: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e",
     category: "fruits"
   },
   {
     id: 2,
-    name: "Fresh Green Spinach",
-    price: 2.49,
+    name: "Fresh Spinach (Keerai)",
+    price: 30,
     image: "https://images.unsplash.com/photo-1576045057995-568f588f82fb",
     category: "vegetables"
   },
   {
     id: 3,
-    name: "Artisan Cheese",
-    price: 6.99,
-    image: "https://images.unsplash.com/photo-1452195100486-9cc805987862",
+    name: "Aavin Butter",
+    price: 50,
+    image: "https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d",
     category: "dairy"
   },
   {
     id: 4,
-    name: "Family Veggie Basket",
-    price: 24.99,
+    name: "Weekly Veggie Basket",
+    price: 599,
     image: "https://images.unsplash.com/photo-1605613928079-c1d0b5266aec",
     category: "baskets"
   },
   {
     id: 5,
-    name: "Homemade Strawberry Jam",
-    price: 5.99,
-    image: "https://images.unsplash.com/photo-1519680490495-a8399afbef7b",
+    name: "Homemade Mango Pickle",
+    price: 180,
+    image: "https://images.unsplash.com/photo-1589365278144-c9e705f843ba",
     category: "homemade"
   },
   {
     id: 6,
-    name: "Organic Apples",
-    price: 3.99,
-    image: "https://images.unsplash.com/photo-1570913149827-d2ac84ab3f9a",
+    name: "Organic Coconuts",
+    price: 35,
+    image: "https://images.unsplash.com/photo-1580984969071-a8da5656c2fb",
     category: "fruits"
   },
   {
     id: 7,
-    name: "Fresh Carrots",
-    price: 2.29,
-    image: "https://images.unsplash.com/photo-1447175008436-054170c2e979",
+    name: "Fresh Okra (Ladies Finger)",
+    price: 40,
+    image: "https://images.unsplash.com/photo-1425543103986-22abb7d7e8d2",
     category: "vegetables"
   },
   {
     id: 8,
-    name: "Organic Milk",
-    price: 3.49,
-    image: "https://images.unsplash.com/photo-1550583724-b2692b85b150",
+    name: "Farm Fresh Curd",
+    price: 45,
+    image: "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e",
     category: "dairy"
   }
 ];
@@ -90,9 +90,9 @@ const ProductCategories = () => {
       <div className="container-custom">
         <div className="text-center mb-12">
           <h2 className="subheadline">Our Products</h2>
-          <h3 className="text-2xl md:text-3xl font-bold mb-6 font-poppins">Fresh From The Farm</h3>
+          <h3 className="text-2xl md:text-3xl font-bold mb-6 font-poppins">Fresh From Tamil Nadu Farms</h3>
           <p className="max-w-2xl mx-auto text-lg text-gray-600">
-            Browse our selection of fresh, organic products grown and made with love by local farmers.
+            Browse our selection of fresh, organic products grown and made with love by local farmers from across Tamil Nadu.
           </p>
         </div>
         
@@ -125,7 +125,7 @@ const ProductCategories = () => {
               <div className="p-4">
                 <h4 className="font-semibold text-lg mb-1">{product.name}</h4>
                 <div className="flex justify-between items-center mt-2">
-                  <span className="text-growgreen-700 font-medium">${product.price.toFixed(2)}</span>
+                  <span className="text-growgreen-700 font-medium">₹{product.price}</span>
                   <Button className="bg-growgreen-600 hover:bg-growgreen-700 h-9 rounded-full px-4">
                     Add to Cart
                   </Button>

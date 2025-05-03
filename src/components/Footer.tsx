@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Package } from 'lucide-react';
+import { Package, MapPin } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -14,7 +14,7 @@ const Footer = () => {
               <span className="text-2xl font-bold text-white font-poppins">Grow<span className="text-earth-300">N</span>Go</span>
             </div>
             <p className="text-earth-200 mb-4">
-              Fresh from farms to your table. Supporting local farmers and sustainable agriculture.
+              Fresh from Tamil Nadu farms to your Chennai table. Supporting local farmers and sustainable agriculture.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-white hover:text-growgreen-300">
@@ -53,15 +53,15 @@ const Footer = () => {
             <ul className="space-y-2">
               <li className="text-earth-200">
                 <span className="block">Email</span>
-                <a href="mailto:hello@growandgo.com" className="text-white hover:text-growgreen-300">hello@growandgo.com</a>
+                <a href="mailto:hello@growandgo.in" className="text-white hover:text-growgreen-300">hello@growandgo.in</a>
               </li>
               <li className="text-earth-200">
                 <span className="block">Phone</span>
-                <a href="tel:+11234567890" className="text-white hover:text-growgreen-300">(123) 456-7890</a>
+                <a href="tel:+919876543210" className="text-white hover:text-growgreen-300">+91 98765 43210</a>
               </li>
               <li className="text-earth-200">
                 <span className="block">Address</span>
-                <address className="not-italic">123 Green Avenue<br/>Farmington, CA 90210</address>
+                <address className="not-italic">42 ECR Road, Adyar<br/>Chennai, Tamil Nadu 600020</address>
               </li>
             </ul>
           </div>
@@ -69,17 +69,18 @@ const Footer = () => {
           {/* Map Column */}
           <div className="md:col-span-1">
             <h3 className="text-lg font-semibold mb-4">Find Us</h3>
-            <div className="h-40 bg-earth-800 rounded-lg overflow-hidden">
-              {/* Placeholder for map - in a real application you would embed a Google Map here */}
+            <div className="h-40 bg-earth-800 rounded-lg overflow-hidden relative">
+              {/* Map indicator for Chennai */}
               <div className="w-full h-full flex items-center justify-center text-earth-300">
-                Map Location
+                <MapPin className="h-6 w-6 absolute" />
+                <span>Chennai, Tamil Nadu</span>
               </div>
             </div>
           </div>
         </div>
         
         <div className="border-t border-earth-800 pt-6 mt-8 text-center text-earth-400 text-sm">
-          <p>&copy; {new Date().getFullYear()} GrowNGo. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} GrowNGo India. All rights reserved.</p>
           <div className="mt-2 space-x-4">
             <a href="#" className="hover:text-white">Privacy Policy</a>
             <a href="#" className="hover:text-white">Terms of Service</a>

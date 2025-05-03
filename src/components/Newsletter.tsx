@@ -24,9 +24,9 @@ const Newsletter = () => {
     <section className="section bg-growgreen-600 text-white">
       <div className="container-custom">
         <div className="text-center mb-10">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 font-poppins">Join Our Community of Conscious Eaters</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 font-poppins">Join Our Chennai Community of Conscious Eaters</h2>
           <p className="text-lg opacity-90 max-w-2xl mx-auto">
-            Subscribe to our newsletter for seasonal recipes, farmer stories, and updates on new products.
+            Subscribe to our newsletter for Tamil Nadu seasonal recipes, farmer stories, and updates on new products.
           </p>
         </div>
         

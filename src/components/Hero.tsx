@@ -9,10 +9,10 @@ const Hero = () => {
         <div className="flex flex-col md:flex-row items-center">
           <div className="md:w-1/2 mb-8 md:mb-0 animate-fade-in">
             <h1 className="headline text-growgreen-800">
-              Fresh from Farms <br className="hidden md:block" />to Your Table
+              Fresh from Tamil Nadu Farms <br className="hidden md:block" />to Your Chennai Home
             </h1>
             <p className="text-lg md:text-xl mb-8 max-w-lg">
-              Delivering locally grown, organic produce and homemade farm goods straight to your doorstep.
+              Delivering locally grown, organic produce and homemade farm goods straight to your doorstep in Chennai.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button className="btn-primary">Shop Now</Button>
@@ -24,7 +24,7 @@ const Hero = () => {
             <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-earth-100 rounded-full -z-10"></div>
             <img 
               src="https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07" 
-              alt="Fresh organic produce" 
+              alt="Fresh organic produce from Tamil Nadu farms" 
               className="rounded-lg shadow-lg w-full h-auto object-cover aspect-[4/3] md:aspect-[16/9]"
             />
           </div>
