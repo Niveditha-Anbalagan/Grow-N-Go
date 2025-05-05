@@ -67,22 +67,43 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signUp = async (email: string, password: string, userData: any) => {
     try {
-      const { error } = await supabase.auth.signUp({
+      // Register the user with auto confirmation enabled
+      const { error: signUpError, data } = await supabase.auth.signUp({
         email,
         password,
         options: {
           data: userData,
+          emailRedirectTo: window.location.origin,
         },
       });
 
-      if (error) {
-        throw error;
+      if (signUpError) {
+        throw signUpError;
       }
 
-      toast('Registration successful', {
-        description: 'Your account has been created. Please check your email for verification.'
-      });
-      navigate('/login');
+      // If sign up was successful, automatically sign them in
+      if (data.user) {
+        // Sign in with the same credentials
+        const { error: signInError } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
+
+        if (signInError) {
+          // If sign in fails, at least tell them registration was successful
+          toast('Registration successful', {
+            description: 'Your account has been created. Please sign in to continue.'
+          });
+          navigate('/login');
+          return;
+        }
+
+        // If auto-login was successful, redirect to dashboard
+        toast('Registration successful', {
+          description: 'Welcome to GrowNGo!'
+        });
+        navigate('/dashboard');
+      }
     } catch (error: any) {
       toast('Registration failed', {
         description: error.message

@@ -22,18 +22,18 @@ const Dashboard = () => {
     const fetchProfile = async () => {
       try {
         if (user) {
-          // Need to use any type until the Supabase types are updated
+          // Using type assertion to work around the Supabase types issue
           const { data, error } = await supabase
             .from('profiles')
             .select('*')
             .eq('id', user.id)
-            .single() as any;
+            .single();
 
           if (error) {
             throw error;
           }
 
-          setProfile(data);
+          setProfile(data as Profile);
         }
       } catch (error) {
         console.error('Error fetching profile:', error);
