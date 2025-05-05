@@ -12,29 +12,86 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useToast } from "@/hooks/use-toast";
-import { Link } from "react-router-dom";
-import { 
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Link, Navigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Registration = () => {
-  const { toast } = useToast();
+  const { user, signUp, loading } = useAuth();
   const [userType, setUserType] = useState<'customer' | 'farmer'>('customer');
+  const [formLoading, setFormLoading] = useState(false);
   
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  // Customer form fields
+  const [customerName, setCustomerName] = useState('');
+  const [customerLastName, setCustomerLastName] = useState('');
+  const [customerEmail, setCustomerEmail] = useState('');
+  const [customerPhone, setCustomerPhone] = useState('');
+  const [customerPassword, setCustomerPassword] = useState('');
+  const [customerConfirmPassword, setCustomerConfirmPassword] = useState('');
+  const [customerAddress, setCustomerAddress] = useState('');
+  
+  // Farmer form fields
+  const [farmerName, setFarmerName] = useState('');
+  const [farmerLastName, setFarmerLastName] = useState('');
+  const [farmerEmail, setFarmerEmail] = useState('');
+  const [farmerPhone, setFarmerPhone] = useState('');
+  const [farmerPassword, setFarmerPassword] = useState('');
+  const [farmerConfirmPassword, setFarmerConfirmPassword] = useState('');
+  const [farmName, setFarmName] = useState('');
+  const [farmAddress, setFarmAddress] = useState('');
+  const [certification, setCertification] = useState('');
+
+  const handleCustomerSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     
-    toast({
-      title: "Account registration initiated",
-      description: "This is a front-end mockup. Backend integration is needed for actual registration.",
-    });
+    if (customerPassword !== customerConfirmPassword) {
+      alert("Passwords don't match");
+      return;
+    }
+    
+    setFormLoading(true);
+    
+    try {
+      await signUp(customerEmail, customerPassword, {
+        first_name: customerName,
+        last_name: customerLastName,
+        phone: customerPhone,
+        address: customerAddress,
+        is_farmer: false
+      });
+    } finally {
+      setFormLoading(false);
+    }
   };
+
+  const handleFarmerSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    
+    if (farmerPassword !== farmerConfirmPassword) {
+      alert("Passwords don't match");
+      return;
+    }
+    
+    setFormLoading(true);
+    
+    try {
+      await signUp(farmerEmail, farmerPassword, {
+        first_name: farmerName,
+        last_name: farmerLastName,
+        phone: farmerPhone,
+        is_farmer: true,
+        farm_name: farmName,
+        farm_address: farmAddress,
+        certification: certification
+      });
+    } finally {
+      setFormLoading(false);
+    }
+  };
+
+  // If user is already logged in, redirect to dashboard
+  if (user && !loading) {
+    return <Navigate to="/dashboard" replace />;
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -67,35 +124,88 @@ const Registration = () => {
           </div>
           
           {userType === 'customer' ? (
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleCustomerSubmit} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="name">Full Name</Label>
-                <Input id="name" type="text" placeholder="Enter your full name" required />
+                <Label htmlFor="name">First Name</Label>
+                <Input 
+                  id="name" 
+                  type="text" 
+                  placeholder="Enter your first name" 
+                  value={customerName}
+                  onChange={(e) => setCustomerName(e.target.value)}
+                  required 
+                />
+              </div>
+              
+              <div className="space-y-2">
+                <Label htmlFor="lastName">Last Name</Label>
+                <Input 
+                  id="lastName" 
+                  type="text" 
+                  placeholder="Enter your last name" 
+                  value={customerLastName}
+                  onChange={(e) => setCustomerLastName(e.target.value)}
+                  required 
+                />
               </div>
               
               <div className="space-y-2">
                 <Label htmlFor="email">Email Address</Label>
-                <Input id="email" type="email" placeholder="you@example.com" required />
+                <Input 
+                  id="email" 
+                  type="email" 
+                  placeholder="you@example.com" 
+                  value={customerEmail}
+                  onChange={(e) => setCustomerEmail(e.target.value)}
+                  required 
+                />
               </div>
               
               <div className="space-y-2">
                 <Label htmlFor="phone">Phone Number</Label>
-                <Input id="phone" type="tel" placeholder="Your 10-digit phone number" required />
+                <Input 
+                  id="phone" 
+                  type="tel" 
+                  placeholder="Your 10-digit phone number" 
+                  value={customerPhone}
+                  onChange={(e) => setCustomerPhone(e.target.value)}
+                  required 
+                />
               </div>
               
               <div className="space-y-2">
                 <Label htmlFor="password">Password</Label>
-                <Input id="password" type="password" placeholder="Create a strong password" required />
+                <Input 
+                  id="password" 
+                  type="password" 
+                  placeholder="Create a strong password" 
+                  value={customerPassword}
+                  onChange={(e) => setCustomerPassword(e.target.value)}
+                  required 
+                />
               </div>
               
               <div className="space-y-2">
                 <Label htmlFor="confirmPassword">Confirm Password</Label>
-                <Input id="confirmPassword" type="password" placeholder="Confirm your password" required />
+                <Input 
+                  id="confirmPassword" 
+                  type="password" 
+                  placeholder="Confirm your password" 
+                  value={customerConfirmPassword}
+                  onChange={(e) => setCustomerConfirmPassword(e.target.value)}
+                  required 
+                />
               </div>
               
               <div className="space-y-2">
                 <Label htmlFor="address">Delivery Address</Label>
-                <Textarea id="address" placeholder="Your complete delivery address" required />
+                <Textarea 
+                  id="address" 
+                  placeholder="Your complete delivery address" 
+                  value={customerAddress}
+                  onChange={(e) => setCustomerAddress(e.target.value)}
+                  required 
+                />
               </div>
               
               <div className="space-y-2">
@@ -127,43 +237,109 @@ const Registration = () => {
                 </Label>
               </div>
               
-              <Button type="submit" className="w-full bg-growgreen-600 hover:bg-growgreen-700">Create Account</Button>
+              <Button 
+                type="submit" 
+                className="w-full bg-growgreen-600 hover:bg-growgreen-700"
+                disabled={formLoading}
+              >
+                {formLoading ? 'Creating Account...' : 'Create Account'}
+              </Button>
             </form>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleFarmerSubmit} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="farmerName">Full Name</Label>
-                <Input id="farmerName" type="text" placeholder="Enter your full name" required />
+                <Label htmlFor="farmerName">First Name</Label>
+                <Input 
+                  id="farmerName" 
+                  type="text" 
+                  placeholder="Enter your first name" 
+                  value={farmerName}
+                  onChange={(e) => setFarmerName(e.target.value)}
+                  required 
+                />
+              </div>
+              
+              <div className="space-y-2">
+                <Label htmlFor="farmerLastName">Last Name</Label>
+                <Input 
+                  id="farmerLastName" 
+                  type="text" 
+                  placeholder="Enter your last name" 
+                  value={farmerLastName}
+                  onChange={(e) => setFarmerLastName(e.target.value)}
+                  required 
+                />
               </div>
               
               <div className="space-y-2">
                 <Label htmlFor="farmerEmail">Email Address</Label>
-                <Input id="farmerEmail" type="email" placeholder="you@example.com" required />
+                <Input 
+                  id="farmerEmail" 
+                  type="email" 
+                  placeholder="you@example.com" 
+                  value={farmerEmail}
+                  onChange={(e) => setFarmerEmail(e.target.value)}
+                  required 
+                />
               </div>
               
               <div className="space-y-2">
                 <Label htmlFor="farmerPhone">Phone Number</Label>
-                <Input id="farmerPhone" type="tel" placeholder="Your 10-digit phone number" required />
+                <Input 
+                  id="farmerPhone" 
+                  type="tel" 
+                  placeholder="Your 10-digit phone number" 
+                  value={farmerPhone}
+                  onChange={(e) => setFarmerPhone(e.target.value)}
+                  required 
+                />
               </div>
               
               <div className="space-y-2">
                 <Label htmlFor="farmerPassword">Password</Label>
-                <Input id="farmerPassword" type="password" placeholder="Create a strong password" required />
+                <Input 
+                  id="farmerPassword" 
+                  type="password" 
+                  placeholder="Create a strong password" 
+                  value={farmerPassword}
+                  onChange={(e) => setFarmerPassword(e.target.value)}
+                  required 
+                />
               </div>
               
               <div className="space-y-2">
                 <Label htmlFor="farmerConfirmPassword">Confirm Password</Label>
-                <Input id="farmerConfirmPassword" type="password" placeholder="Confirm your password" required />
+                <Input 
+                  id="farmerConfirmPassword" 
+                  type="password" 
+                  placeholder="Confirm your password" 
+                  value={farmerConfirmPassword}
+                  onChange={(e) => setFarmerConfirmPassword(e.target.value)}
+                  required 
+                />
               </div>
               
               <div className="space-y-2">
                 <Label htmlFor="farmName">Farm Name</Label>
-                <Input id="farmName" type="text" placeholder="Your farm's name" required />
+                <Input 
+                  id="farmName" 
+                  type="text" 
+                  placeholder="Your farm's name" 
+                  value={farmName}
+                  onChange={(e) => setFarmName(e.target.value)}
+                  required 
+                />
               </div>
               
               <div className="space-y-2">
                 <Label htmlFor="farmAddress">Farm Address / Region</Label>
-                <Textarea id="farmAddress" placeholder="Your farm's address or region" required />
+                <Textarea 
+                  id="farmAddress" 
+                  placeholder="Your farm's address or region" 
+                  value={farmAddress}
+                  onChange={(e) => setFarmAddress(e.target.value)}
+                  required 
+                />
               </div>
               
               <div className="space-y-2">
@@ -190,7 +366,7 @@ const Registration = () => {
               
               <div className="space-y-2">
                 <Label htmlFor="certification">Certification (if applicable)</Label>
-                <Select>
+                <Select value={certification} onValueChange={setCertification}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select certification type" />
                   </SelectTrigger>
@@ -210,7 +386,13 @@ const Registration = () => {
                 </Label>
               </div>
               
-              <Button type="submit" className="w-full bg-growgreen-600 hover:bg-growgreen-700">Register as Farmer</Button>
+              <Button 
+                type="submit" 
+                className="w-full bg-growgreen-600 hover:bg-growgreen-700"
+                disabled={formLoading}
+              >
+                {formLoading ? 'Registering...' : 'Register as Farmer'}
+              </Button>
             </form>
           )}
           

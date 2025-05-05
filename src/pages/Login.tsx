@@ -1,24 +1,33 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { useToast } from "@/hooks/use-toast";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Login = () => {
-  const { toast } = useToast();
+  const { user, signIn, loading } = useAuth();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [formLoading, setFormLoading] = useState(false);
   
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setFormLoading(true);
     
-    // For now, just show a toast notification
-    toast({
-      title: "Sign in attempted",
-      description: "This is a front-end mockup. Backend integration is needed for actual authentication.",
-    });
+    try {
+      await signIn(email, password);
+    } finally {
+      setFormLoading(false);
+    }
   };
+
+  // If user is already logged in, redirect to home
+  if (user && !loading) {
+    return <Navigate to="/dashboard" replace />;
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -32,12 +41,26 @@ const Login = () => {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email">Email Address</Label>
-              <Input id="email" type="email" placeholder="you@example.com" required />
+              <Input 
+                id="email" 
+                type="email" 
+                placeholder="you@example.com" 
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required 
+              />
             </div>
             
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
-              <Input id="password" type="password" placeholder="Your password" required />
+              <Input 
+                id="password" 
+                type="password" 
+                placeholder="Your password" 
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required 
+              />
             </div>
             
             <div className="flex items-center justify-between pt-2">
@@ -50,7 +73,13 @@ const Login = () => {
               </Link>
             </div>
             
-            <Button type="submit" className="w-full bg-growgreen-600 hover:bg-growgreen-700">Sign In</Button>
+            <Button 
+              type="submit" 
+              className="w-full bg-growgreen-600 hover:bg-growgreen-700"
+              disabled={formLoading}
+            >
+              {formLoading ? 'Signing in...' : 'Sign In'}
+            </Button>
           </form>
           
           <div className="text-center mt-6">
