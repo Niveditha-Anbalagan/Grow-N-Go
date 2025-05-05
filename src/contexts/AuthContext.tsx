@@ -45,23 +45,46 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signIn = async (email: string, password: string) => {
     try {
-      const { error } = await supabase.auth.signInWithPassword({
+      const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
 
       if (error) {
-        throw error;
+        // Handle specific error cases
+        if (error.message.includes('Email not confirmed')) {
+          await resendEmailConfirmation(email);
+          toast('Verification email sent', {
+            description: 'Please check your inbox and confirm your email'
+          });
+        } else {
+          throw error;
+        }
+      } else if (data.user) {
+        navigate('/dashboard');
+        toast('Login successful', {
+          description: 'Welcome back to GrowNGo!'
+        });
       }
-
-      navigate('/');
-      toast('Login successful', {
-        description: 'Welcome back to GrowNGo!'
-      });
     } catch (error: any) {
+      console.error('Login error:', error.message);
       toast('Login failed', {
         description: error.message
       });
+    }
+  };
+
+  // Helper function to resend confirmation email
+  const resendEmailConfirmation = async (email: string) => {
+    try {
+      const { error } = await supabase.auth.resend({
+        type: 'signup',
+        email: email,
+      });
+      
+      if (error) throw error;
+    } catch (error: any) {
+      console.error('Error resending confirmation:', error.message);
     }
   };
 
@@ -83,26 +106,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       // If sign up was successful, automatically sign them in
       if (data.user) {
-        // Sign in with the same credentials
-        const { error: signInError } = await supabase.auth.signInWithPassword({
-          email,
-          password,
-        });
-
-        if (signInError) {
-          // If sign in fails, at least tell them registration was successful
+        if (data.session) {
+          // User is already authenticated, redirect to dashboard
           toast('Registration successful', {
-            description: 'Your account has been created. Please sign in to continue.'
+            description: 'Welcome to GrowNGo!'
           });
-          navigate('/login');
-          return;
+          navigate('/dashboard');
+        } else {
+          // Email confirmation is required
+          toast('Registration successful', {
+            description: 'Please check your email to confirm your account before logging in.'
+          });
         }
-
-        // If auto-login was successful, redirect to dashboard
-        toast('Registration successful', {
-          description: 'Welcome to GrowNGo!'
-        });
-        navigate('/dashboard');
       }
     } catch (error: any) {
       toast('Registration failed', {
