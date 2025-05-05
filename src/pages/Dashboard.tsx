@@ -22,11 +22,12 @@ const Dashboard = () => {
     const fetchProfile = async () => {
       try {
         if (user) {
+          // Need to use any type until the Supabase types are updated
           const { data, error } = await supabase
             .from('profiles')
             .select('*')
             .eq('id', user.id)
-            .single();
+            .single() as any;
 
           if (error) {
             throw error;

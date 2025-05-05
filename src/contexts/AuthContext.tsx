@@ -56,12 +56,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       navigate('/');
       toast('Login successful', {
-        description: 'Welcome back to GrowNGo!',
+        description: 'Welcome back to GrowNGo!'
       });
     } catch (error: any) {
       toast('Login failed', {
-        description: error.message,
-        variant: 'destructive',
+        description: error.message
       });
     }
   };
@@ -81,13 +80,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
 
       toast('Registration successful', {
-        description: 'Your account has been created. Please check your email for verification.',
+        description: 'Your account has been created. Please check your email for verification.'
       });
       navigate('/login');
     } catch (error: any) {
       toast('Registration failed', {
-        description: error.message,
-        variant: 'destructive',
+        description: error.message
       });
     }
   };
@@ -99,8 +97,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       toast('Logged out successfully');
     } catch (error: any) {
       toast('Logout failed', {
-        description: error.message,
-        variant: 'destructive',
+        description: error.message
       });
     }
   };
