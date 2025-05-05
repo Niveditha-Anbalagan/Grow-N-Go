@@ -9,7 +9,42 @@ const SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiO
 // Import the supabase client like this:
 // import { supabase } from "@/integrations/supabase/client";
 
-export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
+// Define extended database types
+interface CustomDatabase extends Database {
+  public: {
+    Tables: {
+      profiles: {
+        Row: {
+          id: string;
+          first_name: string;
+          last_name: string;
+          is_farmer: boolean;
+          farm_name?: string;
+        }
+        Insert: {
+          id: string;
+          first_name: string;
+          last_name: string;
+          is_farmer: boolean;
+          farm_name?: string;
+        }
+        Update: {
+          id?: string;
+          first_name?: string;
+          last_name?: string;
+          is_farmer?: boolean;
+          farm_name?: string;
+        }
+      }
+    } & Database['public']['Tables']
+    Views: Database['public']['Views']
+    Functions: Database['public']['Functions']
+    Enums: Database['public']['Enums']
+    CompositeTypes: Database['public']['CompositeTypes']
+  }
+}
+
+export const supabase = createClient<CustomDatabase>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
   auth: {
     autoRefreshToken: true,
     persistSession: true,

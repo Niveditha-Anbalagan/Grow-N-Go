@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
@@ -22,7 +21,6 @@ const Dashboard = () => {
     const fetchProfile = async () => {
       try {
         if (user) {
-          // Using type assertion to work around the Supabase types issue
           const { data, error } = await supabase
             .from('profiles')
             .select('*')
@@ -33,7 +31,7 @@ const Dashboard = () => {
             throw error;
           }
 
-          setProfile(data as Profile);
+          setProfile(data);
         }
       } catch (error) {
         console.error('Error fetching profile:', error);
